@@ -1,73 +1,140 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# 🔐 Auth System – Frontend
 
-Currently, two official plugins are available:
+Frontend de un sistema de autenticación moderno y seguro, construido con **React + TypeScript + Vite**, que consume una API backend propia y maneja sesiones mediante **cookies HTTP-only con refresh automático**, similar al flujo de autenticación de Google o Facebook.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 🚀 Tecnologías usadas
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **React 18**
+- **TypeScript**
+- **Vite**
+- **React Router DOM**
+- **Context API**
+- **Fetch API**
+- **CSS puro (custom UI)**
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 📂 Estructura del proyecto
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+```bash
+src/
+├── api/
+│   └── auth.api.ts          # Llamadas HTTP al backend (login, register, me, refresh, logout)
+├── auth/
+│   ├── AuthContext.tsx      # Contexto global de autenticación
+│   ├── ProtectedRoute.tsx  # Protege rutas privadas
+│   ├── PublicRoute.tsx     # Evita acceso a login/register si hay sesión
+│   └── useAuth.ts           # Hook personalizado
+├── components/
+│   └── LoginForm.tsx
+├── pages/
+│   ├── Login.tsx
+│   ├── Register.tsx
+│   └── Dashboard.tsx
+├── router/
+│   └── index.tsx            # Definición de rutas
+├── types/
+│   └── auth.ts              # Tipos compartidos
+├── App.tsx
+├── main.tsx
+└── index.css
+🔐 Flujo de autenticación
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+Este frontend implementa un sistema de sesión seguro basado en cookies:
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+El usuario inicia sesión o se registra
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+El backend devuelve una cookie HTTP-only
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+El frontend:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Valida la sesión con /auth/me
+
+Si es necesario, renueva la sesión con /auth/refresh
+
+El estado del usuario se guarda en AuthContext
+
+Las rutas se protegen usando:
+
+ProtectedRoute
+
+PublicRoute
+
+✅ El usuario no se desloguea al recargar la página
+✅ Funciona correctamente en múltiples pestañas
+✅ No usa localStorage para tokens (más seguro)
+
+🧠 AuthContext
+
+El contexto de autenticación maneja:
+
+Usuario autenticado
+
+Estado de carga (loading)
+
+Verificación automática de sesión al cargar la app
+
+const { user, loading, setUser } = useAuth();
+
+
+Mientras loading === true, la app espera antes de redirigir, evitando falsos logout al recargar.
+
+🔁 Refresh automático de sesión
+
+Si la cookie está por expirar:
+
+Se llama automáticamente a /auth/refresh
+
+La sesión se renueva sin que el usuario note nada
+
+Si la sesión expiró completamente:
+
+Se redirige al login
+
+🛣️ Rutas
+Ruta	Tipo	Descripción
+/login	Pública	Login de usuario
+/register	Pública	Registro de usuario
+/dashboard	Protegida	Vista privada del usuario logueado
+⚙️ Variables de entorno
+
+Crear un archivo .env en la raíz del frontend:
+
+VITE_API_URL=http://localhost:3000
+
+
+⚠️ No subir este archivo al repositorio
+
+▶️ Ejecutar el proyecto
+npm install
+npm run dev
+
+
+La aplicación estará disponible en:
+
+http://localhost:5173
+
+🔒 Seguridad
+
+Cookies HTTP-only
+
+Refresh automático
+
+Rutas protegidas
+
+Rate limit aplicado en backend
+
+No exposición de tokens en el cliente
+
+📌 Notas
+
+Este frontend depende del backend para funcionar correctamente
+
+El backend debe estar corriendo y aceptar cookies (credentials: "include")
+
+📄 Licencia
+
+Proyecto de uso educativo y personal.
