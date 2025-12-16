@@ -1,0 +1,536 @@
+/* ==================================== */
+/* 1. Reset y Variables de Diseño (Estética Pulida) */
+/* ==================================== */
+:root {
+    --primary-color: #5d5dfffb; /* Azul Morado moderno */
+    --primary-hover: #4848d6;
+    --background-color: #eef1f6;
+    --card-background: #ffffff;
+    --text-color: #2c3e50; /* Gris oscuro para el texto principal */
+    --input-border-color: #dfe4ed;
+    --focus-shadow: 0 0 0 4px rgba(93, 93, 255, 0.15); /* Sombra de enfoque suave */
+    --soft-shadow: 0 10px 35px rgba(0, 0, 0, 0.1); /* Sombra más pronunciada pero difusa */
+    --error-color: #e74c3c; /* Rojo de error limpio */
+    --transition-duration: 0.3s;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+/* ==================================== */
+/* 2. Contenedor Principal (Centrado Responsive) */
+/* ==================================== */
+.login-container {
+    /* Centrado total */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    flex-direction: column;
+    background-color: var(--color-background); /* Usamos la variable de fondo */
+    /* Animación sutil al cargar (Fade-in) */
+    opacity: 0;
+    animation: fadeIn 0.8s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 3. Tarjeta de Autenticación (Login Form) */
+.login-form {
+    width: 100%;
+    max-width: 400px; /* Tamaño del registro */
+    padding: 30px;
+    background: var(--color-white);
+    border-radius: var(--border-radius-base);
+    border: 1px solid #33333338;  
+    
+    /* Sombra suave y elegante */
+    box-shadow: 0 10px 30px var(--color-shadow);
+    
+    /* Transición sutil */
+    transition: transform var(--transition-duration) ease-out;
+}
+
+/* 4. Encabezado */
+.login-container h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--color-primary-dark);
+    margin-bottom: 25px;
+    text-align: center;
+    /* Eliminamos el border-bottom para alinearlo con el diseño de registro */
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+/* 5. Inputs (Grandes, Redondeados, Foco Visible) */
+/* Usando el selector directo o .input-group si lo usaras para envolver */
+
+.login-form input {
+    width: 100%;
+    padding: 15px 18px; /* Inputs grandes */
+    margin-bottom: 18px;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius-input); /* Bordes redondeados */
+    font-size: 1rem;
+    color: #333;
+    transition: border-color var(--transition-duration), box-shadow var(--transition-duration);
+}
+
+.login-form input:focus {
+    outline: none;
+    border-color: var(--color-primary); /* Foco visible y profesional */
+    box-shadow: 0 0 0 3px var(--color-accent); /* Sombra de foco suave */
+}
+
+/* 6. Botón Principal (Destacado, Hover y Loading State) */
+.login-form button[type="submit"] {
+    width: 100%;
+    padding: 15px;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    border-radius: var(--border-radius-input);
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 10px;
+    box-shadow: 0 4px 15px rgba(74, 74, 152, 0.3); /* Sombra para destacarlo */
+    transition: background-color var(--transition-duration), transform 0.1s, box-shadow var(--transition-duration);
+}
+
+.login-form button[type="submit"]:hover:not(:disabled) {
+    background-color: var(--color-primary-dark);
+    box-shadow: 0 6px 20px rgba(74, 74, 152, 0.4);
+    transform: translateY(-2px); /* Ligeramente más sutil que el anterior */
+}
+
+.login-form button[type="submit"]:active {
+    transform: scale(0.99);
+}
+
+/* Estado Disabled (Loading State) */
+.login-form button[type="submit"]:disabled {
+    background-color: var(--color-accent);
+    cursor: wait;
+    box-shadow: none;
+    opacity: 0.8;
+    transform: none;
+}
+
+/* 7. Mensaje de Error (Claro y Elegante) */
+.error-text {
+     min-height: 20px;
+  
+  /* Tipografía y Espaciado */
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-align: left;
+  line-height: 1.4;
+  
+  /* Ajustes de Margen */
+  margin-top: 5px; 
+  margin-bottom: 20px;
+  padding: 10px 15px;
+  background-color: #fcebeb; 
+  color: #c0392b; 
+  border-left: 5px solid #c0392b; 
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.error-text:not(:empty) {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 8. Footer (Ejemplo, si tuvieras un link "Crear cuenta") */
+.auth-footer {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.auth-footer a {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.auth-footer a:hover {
+    color: var(--color-primary-dark);
+    text-decoration: underline;
+}
+
+/* 9. Diseño Responsivo */
+@media (min-width: 600px) {
+    .login-form {
+        padding: 40px 45px; /* Mismo padding que el registro */
+    }
+    
+    .login-container h2 {
+        font-size: 2rem;
+        margin-bottom: 30px;
+    }
+}
+
+/* css para el registro de usuarios */
+/* 2. Contenedor Principal (Centrado) */
+.auth-container {
+  /* Centrado total */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  /* Animación sutil al cargar (Fade-in) */
+  opacity: 0;
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 3. Tarjeta de Autenticación (Auth Card) */
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 30px;
+  background: var(--color-white);
+  border-radius: var(--border-radius-base);
+  border: 1px solid #33333338;  
+  /* Sombra suave y elegante */
+  box-shadow: 0 10px 30px var(--color-shadow);
+  
+  /* Glassmorphism suave (opcional, si se desea un fondo con imagen) */
+  /* backdrop-filter: blur(5px); */
+  /* background-color: rgba(255, 255, 255, 0.9); */
+  
+  /* Transición sutil para el efecto de carga/interacción */
+  transition: transform var(--transition-duration) ease-out;
+}
+
+/* 4. Encabezado */
+.auth-card h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--color-primary-dark);
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+/* 5. Inputs (Grandes, Redondeados, Foco Visible) */
+.auth-card input[type="email"],
+.auth-card input[type="password"] {
+  width: 100%;
+  padding: 15px 18px; /* Inputs grandes */
+  margin-bottom: 18px;
+  border: 1px solid #ddd;
+  border-radius: var(--border-radius-input); /* Bordes redondeados */
+  font-size: 1rem;
+  color: #333;
+  transition: border-color var(--transition-duration), box-shadow var(--transition-duration);
+}
+
+.auth-card input:focus {
+  outline: none;
+  border-color: var(--color-primary); /* Foco visible y profesional */
+  box-shadow: 0 0 0 3px var(--color-accent); /* Sombra de foco suave */
+}
+
+/* 6. Mensajes de Error - DISEÑO MODERNO Y ELEGANTE */
+.auth-card .error {
+  /* Estructura (Visible por defecto, sin transiciones) */
+  min-height: 20px;
+  
+  /* Tipografía y Espaciado */
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-align: left;
+  line-height: 1.4;
+  
+  /* Ajustes de Margen */
+  margin-top: 5px; 
+  margin-bottom: 20px;
+  padding: 10px 15px;
+  background-color: #fcebeb; 
+  color: #c0392b; 
+  border-left: 5px solid #c0392b; 
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* 7. Botón Principal (Destacado, Hover y Loading State) */
+.auth-card button {
+  width: 100%;
+  padding: 15px;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--border-radius-input);
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+  box-shadow: 0 4px 15px rgba(74, 74, 152, 0.3); /* Sombra para destacarlo */
+  transition: background-color var(--transition-duration), transform 0.1s, box-shadow var(--transition-duration);
+}
+
+.auth-card button:hover {
+  background-color: var(--color-primary-dark);
+  box-shadow: 0 6px 20px rgba(74, 74, 152, 0.4);
+}
+
+.auth-card button:active {
+  transform: scale(0.99);
+}
+
+/* Estado de Carga (Simulación simple) */
+.auth-card button[disabled] {
+  background-color: var(--color-accent);
+  cursor: wait;
+  box-shadow: none;
+  opacity: 0.8;
+}
+
+/* 8. Pie de Página de Autenticación */
+.auth-footer {
+  text-align: center;
+  margin-top: 25px;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.auth-footer a {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.auth-footer a:hover {
+  color: var(--color-primary-dark);
+  text-decoration: underline;
+}
+
+.form-success {
+  margin-top: 12px;
+  padding: 12px 14px;
+
+  border-radius: 10px;
+  border: 1px solid #2ecc71;
+
+  background: rgba(46, 204, 113, 0.12);
+  color: #2ecc71;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.form-success::before {
+  content: "✓";
+  font-size: 16px;
+}
+
+/* 9. Diseño Responsivo (Mobile First) */
+/* La mayor parte del diseño ya es mobile-first. 
+   Ajustamos solo el padding de la tarjeta para pantallas más grandes. */
+@media (min-width: 600px) {
+  .auth-card {
+    padding: 40px 45px;
+  }
+  
+  .auth-card h2 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+  }
+}
+
+/* estilos para el dasboard */
+/* ================================ */
+/* Dashboard – Dinámico y visual */
+/* ================================ */
+
+.dashboard-container {
+  min-height: 100vh;
+  padding: 20px;
+  background-color: var(--background-color);
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  opacity: 0;
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+/* Header */
+.dashboard-header {
+  width: 100%;
+  margin: 0 auto;
+  box-shadow: var(--soft-shadow);
+  border-radius: var(--border-radius-base);
+  padding: 20px 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  border: 1px solid #ddd;
+
+}
+
+.dashboard-header h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: var(--text-color);
+}
+
+.dashboard-header button {
+  padding: 12px 20px;
+  border: 1px solid #333;
+  color: #2c3e50;
+  border-radius: var(--border-radius-input);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color var(--transition-duration), transform 0.1s;
+}
+
+.dashboard-header button:hover {
+  background-color: #333;
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+/* Grid */
+.dashboard-grid {
+  width: 100%;
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+/* Cards */
+.dashboard-card {
+  background: var(--card-background);
+  box-shadow: var(--soft-shadow);
+  border-radius: var(--border-radius-base);
+  padding: 22px;
+  position: relative;
+  min-width: 0;      /* 🔥 ESTO ES CRÍTICO */
+  width: 100%;
+  min-height: 180px;
+}
+
+
+.dashboard-card.wide {
+  grid-column: span 1;
+}
+
+.card-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #777;
+}
+
+.dashboard-card h3 {
+  margin: 8px 0 15px;
+  font-size: 1.2rem;
+  color: var(--text-color);
+  padding: 4px 0;
+}
+
+/* Indicadores visuales */
+.card-indicator {
+  height: 12px;
+  width: 100%;
+  border-radius: 4px;
+  background: #e5e7eb;
+  overflow: hidden;
+}
+
+.card-indicator::after {
+  content: "";
+  display: block;
+  height: 100%;
+  width: 70%;
+  background-color: var(--primary-color);
+}
+
+.card-indicator.active::after {
+  width: 100%;
+}
+
+/* Actividad (visual, no texto) */
+.activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.activity-item {
+  height: 12px;
+  margin: 5px 0;
+  border-radius: 6px;
+  background: #e5e7eb;
+}
+
+/* Footer */
+.dashboard-footer {
+  margin-top: auto;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+/* Responsive */
+@media (min-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dashboard-card.wide {
+    grid-column: span 2;
+  }
+}
+
+@media (min-width: 1100px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .dashboard-card.wide {
+    grid-column: span 3;
+  }
+}
+
+
