@@ -23,14 +23,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
   const checkSession = async () => {
     let data = await meRequest(); // primer intento
-      console.log("Respuesta de meRequest:", data);
     if (!data) {
       // intenta refresh si no hay sesión activa
       data = await apiRefreshRequest();
-      console.log("Respuesta de refreshRequest:", data);
     }
     if (data) setUser(data);
-    console.log("Asignando usuario a state:", data);
     setLoading(false);
   };
 
