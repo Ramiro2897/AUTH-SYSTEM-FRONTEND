@@ -22,17 +22,22 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
   const checkSession = async () => {
-    let data = await meRequest(); // primer intento
-    if (!data) {
-      // intenta refresh si no hay sesión activa
-      data = await apiRefreshRequest();
+    try {
+      let data = await meRequest(); // primer intento
+      if (!data) {
+        // intenta refresh si no hay sesión activa
+        data = await apiRefreshRequest();
+      }
+      if (data) setUser(data);
+    } catch (err) {
+      setUser(null);
+    } finally {
+      setLoading(false); // solo setea loading en false cuando termina todo
     }
-    if (data) setUser(data);
-    setLoading(false);
   };
 
   checkSession();
-  }, []);
+}, []);
 
   return (
     <AuthContext.Provider value={{ user, loading, setUser }}>

@@ -5,13 +5,7 @@ import type { JSX } from "react";
 const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
   const { user, loading } = useAuth();
 
-  if (loading)
-  return (
-    <div className="loader-container">
-      <div className="spinner"></div>
-      <p>Cargando...</p>
-    </div>
-  );
+  if (loading) return null;
 
   if (!user) return <Navigate to="/login" replace />;
 
