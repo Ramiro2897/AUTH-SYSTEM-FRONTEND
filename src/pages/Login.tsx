@@ -58,6 +58,10 @@ const Login = () => {
         <button type="submit" disabled={loading}>
           {loading ? "Ingresando..." : "Login"}
         </button>
+        {/* 👇 FOOTER */}
+        <p className="auth-footer">
+          ¿No tienes cuenta? <a href="/register">Registrate</a>
+        </p>
       </form>
     </div>
   );
