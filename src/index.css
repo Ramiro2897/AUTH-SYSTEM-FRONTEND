@@ -560,7 +560,7 @@ body {
 }
 /* From Uiverse.io by cosnametv */ 
 .loader {
-  --color: #a5a5b0;
+  --color: #333;
   --size: 70px;
   width: var(--size);
   height: var(--size);

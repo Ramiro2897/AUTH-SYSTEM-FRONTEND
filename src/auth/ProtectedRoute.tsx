@@ -16,7 +16,7 @@ const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
         <span></span>
         <span></span>
       </div>
-      <p className="message">Espere mientras despliega hahaha xd</p>
+      <p className="message">Espere mientras carga hahaha xd</p>
     </div>
   );
 
